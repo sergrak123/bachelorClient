@@ -20,13 +20,14 @@ function App() {
     // const [selectedSort, setSelectedSort] = useState("")
     // const [searchQuery, setSearchQuery] = useState("")
     const [filter, setFilter] = useState({sort: "", query: ""})
-    const [modal, setModal] = useState(false)
-    const sortedAndSearchPosts = usePosts(posts, filter.sort, filter.query)
+    const [modal, setModal] = useState(false);
+    const sortedAndSearchPosts = usePosts(posts, filter.sort, filter.query);
     // const [isPostLoading, setIsPostsLoading] = useState(false)
     const [fetchPosts, isPostsLoading] = useFetching(async () => {
         const posts = await PostService.getAll();
         setPosts(posts)
     })
+
 
 
     // const sortedPost = useMemo(() => {
