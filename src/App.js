@@ -12,6 +12,8 @@ import {usePosts} from "./hooks/usePosts";
 import axios from "axios";
 import PostService from "./API/PostService";
 import {useFetching} from "./hooks/useFetching";
+import {getPagesArray, getPagesCount} from "./utils/pages";
+import myButton from "./components/UI/button/MyButton";
 
 function App() {
 
@@ -21,14 +23,21 @@ function App() {
     // const [searchQuery, setSearchQuery] = useState("")
     const [filter, setFilter] = useState({sort: "", query: ""})
     const [modal, setModal] = useState(false);
+    const [totalPages, setTotalPages] = useState(0)
+    const [limit, setLimit] = useState(10)
+    const [page, setPage] = useState(1)
+    let pagesArray = getPagesArray(totalPages)
+
     const sortedAndSearchPosts = usePosts(posts, filter.sort, filter.query);
     // const [isPostLoading, setIsPostsLoading] = useState(false)
+
+    //1 или передавать тут параметры limit page для вызова сразу без оптимизации
     const [fetchPosts, isPostsLoading] = useFetching(async () => {
-        const posts = await PostService.getAll();
-        setPosts(posts)
+        const response = await PostService.getAll(limit, page);
+        setPosts(response.data)
+        const totalCount = response.headers["x-total-count"]
+        setTotalPages(getPagesCount(totalCount, limit))
     })
-
-
 
     // const sortedPost = useMemo(() => {
     //     console.log("call")
@@ -75,7 +84,7 @@ function App() {
 
     useEffect(() => {
         fetchPosts()
-    }, [])
+    }, [page])
 
     function createPost(newPost) {
         setPosts([...posts, newPost])
@@ -95,6 +104,14 @@ function App() {
     function removePost(post) {
         //фильтруем и возвращаем новый чтобы соотв условию
         setPosts(posts.filter(p => p.id !== post.id))
+    }
+
+    //С запазданием
+    function changePage(page) {
+        setPage(page)
+        //2 и вызывать тут с параметрами этими
+        // fetchPosts()
+
     }
 
     // function sortPost(sort) {
@@ -120,6 +137,15 @@ function App() {
                 ? <h1>Load...</h1>
                 : <PostList posts={sortedAndSearchPosts} remove={removePost}/>
             }
+            <div style={{marginTop: 30}}>
+                {pagesArray.map(p =>
+                    <button
+                        key={p}
+                        onClick={() => changePage(p)}
+                    >{p}
+                    </button>
+                )}
+            </div>
 
         </div>
     );
