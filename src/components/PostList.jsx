@@ -3,7 +3,7 @@ import PostItem from "./PostItem";
 
 const PostList = ({posts, remove}) => {
 
-    if(!posts.length){
+    if (!posts.length) {
         return (
             <div>Постов нет</div>
         )
@@ -13,7 +13,7 @@ const PostList = ({posts, remove}) => {
             <h1>Список</h1>
             {/*//index не желательно тк меняется при удалении и заново перерисовыввает .....(/)______*/}
             {posts.map(post =>
-                <PostItem post={post} key = {posts.id} remove={remove}></PostItem>)}
+                <PostItem post={post} key={post.id} remove={remove}></PostItem>)}
 
         </div>
     );

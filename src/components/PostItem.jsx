@@ -1,7 +1,11 @@
 import React from 'react';
 import * as events from "events";
+import {useNavigate} from "react-router-dom";
 
 const PostItem = (props) => {
+
+    // const router = useHistory()
+    const router = useNavigate()
 
     return (
         <div>
@@ -12,6 +16,7 @@ const PostItem = (props) => {
                 </div>
 
                 <div className="post__btns">
+                    <button onClick={() => router(`/posts/${props.post.id}`)}>Open</button>
                     <button onClick={() => props.remove(props.post)}>Delete</button>
                 </div>
 
