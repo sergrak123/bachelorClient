@@ -19,7 +19,7 @@ const Router = () => {
                 {privateRoutes.map(route =>
                     <Route path={route.path} element={route.element} key={route.path}/>
                 )}
-                <Route path="*" element={<Navigate to="/posts" replace/>}/>
+                <Route path="*" element={<Navigate to="/catalog" replace/>}/>
             </Routes>
             :
             <Routes>

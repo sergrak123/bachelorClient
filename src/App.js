@@ -43,30 +43,10 @@ function App() {
             isLoading
         }}>
             <BrowserRouter>
-{/*                <div className="bg-blue-500 h-full w-full">*/}
-{/*d*/}
-{/*                </div>*/}
+
                 <NavBarCustom/>
-                <div className="w-full flex bg-gray-100">
+                <Router/>
 
-                    <div className="w-1/6 mt-36 bg-white rounded-md ml-10" >
-                        <Category/>
-                    </div>
-                    <div className="w-4/6 pl-16 mb-28">
-                        <ProductList/>
-                        <Pagination/>
-                    </div>
-
-
-
-                </div>
-
-                {/*<div className="bg-blue-500 h-full w-full">*/}
-                {/*    d*/}
-                {/*</div>*/}
-
-                {/*<Navbar/>*/}
-                {/*<Router/>*/}
             </BrowserRouter>
         </AuthContext.Provider>
 
