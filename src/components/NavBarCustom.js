@@ -45,7 +45,10 @@ export default function NavBarCustom() {
                             {/*    src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"*/}
                             {/*    alt="Workflow"*/}
                             {/*/>*/}
-                            <div className="text-white font-montserrat font-light text-2xl">FoodFinder</div>
+                            <Link to="/catalog">
+                                <div className="text-white font-montserrat font-light text-2xl">FoodFinder</div>
+                            </Link>
+
                         </div>
                     </div>
 
@@ -62,7 +65,8 @@ export default function NavBarCustom() {
                                     id="search"
                                     name="search"
                                     className="block w-full bg-gray-700 border border-transparent rounded-md py-2 pl-10 pr-3 text-sm placeholder-gray-400 focus:outline-none focus:bg-white focus:border-white focus:ring-white focus:text-gray-900 focus:placeholder-gray-500 sm:text-sm"
-                                    placeholder="Search"
+                                    // placeholder="Search"
+                                    placeholder="Поиск"
                                     type="search"
                                     autoComplete="off"
                                 />
@@ -84,13 +88,14 @@ export default function NavBarCustom() {
 
                     <div className="relative z-10 ml-4 flex items-center">
 
-
-                        <button
-                            type="button"
-                            className="bg-gray-800 flex-shrink-0 rounded-full p-1 text-gray-400 hover:text-white focus:outline-none  focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
-                            <span className="sr-only">View shopping cart</span>
-                            <ShoppingCartIcon className="h-6 w-6" aria-hidden="true"/>
-                        </button>
+                        <Link to="/cart">
+                            <button
+                                type="button"
+                                className="bg-gray-800 flex-shrink-0 rounded-full p-1 text-gray-400 hover:text-white focus:outline-none  focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                                <span className="sr-only">View shopping cart</span>
+                                <ShoppingCartIcon className="h-6 w-6" aria-hidden="true"/>
+                            </button>
+                        </Link>
 
                         {isAuth
                             //Profile dropdown

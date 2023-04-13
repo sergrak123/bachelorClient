@@ -4,15 +4,9 @@ import {
     Routes,
     Route,
 } from "react-router-dom";
-import About from "./pages/About";
-import Posts from "./pages/Posts";
-import Navbar from "./components/UI/Navbar/Navbar";
 import Router from "./components/Router";
 import {AuthContext} from "./context";
 import NavBarCustom from "./components/NavBarCustom";
-import ProductList from "./components/ProductList";
-import Category from "./components/Category";
-import Pagination from "./components/Pagination";
 
 // const router = createBrowserRouter([
 //     {

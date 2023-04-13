@@ -1,19 +1,24 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Category from "../components/Category";
 import ProductList from "../components/ProductList";
 import Pagination from "../components/Pagination";
 
+
 function Catalog(props) {
+
+    const [category, setCategory] = useState("");
+    const [page, setPage] = useState(0);
+
     return (
         <div className="w-full">
             <div className="flex bg-gray-100">
 
                 <div className="w-1/6 mt-36 bg-white rounded-md ml-10" >
-                    <Category/>
+                    <Category category={category} setCategory={setCategory} setPage={setPage}/>
                 </div>
                 <div className="w-4/6 pl-16 mb-28">
-                    <ProductList/>
-                    <Pagination/>
+                    <ProductList category={category} setCategory={setCategory} page={page} setPage={setPage}/>
+                    <Pagination page={page} setPage={setPage}/>
                 </div>
             </div>
         </div>

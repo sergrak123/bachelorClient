@@ -1,17 +1,18 @@
-import About from "../pages/About";
-import Posts from "../pages/Posts";
 import PostIdPage from "../pages/PostIdPage";
 import Login from "../pages/Login";
 import Catalog from "../pages/Catalog";
+import Card from "../pages/Card";
+import ShoppingCart from "../pages/ShoppingCart";
 
 export const privateRoutes = [
-    // {path: "/about", element: <About/>},
     // {path: "/posts", element: <Posts/>},
     // {path: "/posts/:id", element: <PostIdPage/>}
     {path: "/catalog", element: <Catalog/>},
+    {path: "/cart", element: <ShoppingCart/>},
 ]
 
 export const publicRoutes = [
     {path: "/login", element: <Login/>},
     {path: "/catalog", element: <Catalog/>},
+    {path: "/cart", element: <ShoppingCart/>},
 ]
