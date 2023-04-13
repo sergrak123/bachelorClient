@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import Card from "../pages/Card";
 
 
-export default function ProductList({category,setCategory, page, setPage}) {
+export default function ProductList({category,setCategory, page, setPage, setTotalPage}) {
 
     const [products, setProducts] = useState([]);
     const [modal, setModal] = useState(false);
@@ -19,8 +19,8 @@ export default function ProductList({category,setCategory, page, setPage}) {
             }
         })
         console.log(response)
-        //update totalPage
         setProducts(response.data.content)
+        setTotalPage(response.data.totalPages)
     }
 
     useEffect(() => {

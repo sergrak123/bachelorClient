@@ -8,6 +8,7 @@ function Catalog(props) {
 
     const [category, setCategory] = useState("");
     const [page, setPage] = useState(0);
+    const [totalPage, setTotalPage] = useState(1);
 
     return (
         <div className="w-full">
@@ -17,8 +18,8 @@ function Catalog(props) {
                     <Category category={category} setCategory={setCategory} setPage={setPage}/>
                 </div>
                 <div className="w-4/6 pl-16 mb-28">
-                    <ProductList category={category} setCategory={setCategory} page={page} setPage={setPage}/>
-                    <Pagination page={page} setPage={setPage}/>
+                    <ProductList category={category} setCategory={setCategory} page={page} setPage={setPage} setTotalPage={setTotalPage}/>
+                    <Pagination page={page} setPage={setPage} totalPage={totalPage}/>
                 </div>
             </div>
         </div>

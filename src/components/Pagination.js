@@ -1,15 +1,19 @@
 /* This example requires Tailwind CSS v2.0+ */
 import {ArrowNarrowLeftIcon, ArrowNarrowRightIcon} from '@heroicons/react/solid'
 import {useState} from "react";
+import {getPagesArray} from "../utils/pages";
 
 
-const pages = [
-    {value: 0, current: false},
-    {value: 1, current: false},
-    // {value: 2, current: false},
-]
+// const pages = [
+//     {value: 0, current: false},
+//     {value: 1, current: false},
+//     // {value: 2, current: false},
+// ]
 
-export default function Pagination({page, setPage}) {
+
+export default function Pagination({page, setPage,totalPage}) {
+
+    let pagesArray = getPagesArray(totalPage)
 
     return (
         <nav className="border-t border-gray-200 px-4 flex items-center justify-between sm:px-0">
@@ -23,16 +27,15 @@ export default function Pagination({page, setPage}) {
                 {/*</a>*/}
             </div>
             <div className="hidden md:-mt-px md:flex">
-                {pages.map((p) => (
+                {pagesArray.map(p => (
                     <a
                         onClick={() => {
-                            setPage(p.value)
+                            setPage(p)
                         }}
-                        className={p.value === page
+                        className={p === page
                             ? "border-gray-900 text-gray-900 border-t-2 pt-4 px-4 inline-flex items-center text-sm font-medium"
-                            : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 border-t-2 pt-4 px-4 inline-flex items-center text-sm font-medium"}
-                    >
-                        {p.value + 1}
+                            : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 border-t-2 pt-4 px-4 inline-flex items-center text-sm font-medium"}>
+                        {p + 1}
                     </a>
                 ))}
                 {/*<a*/}
