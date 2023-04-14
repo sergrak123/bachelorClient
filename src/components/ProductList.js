@@ -4,16 +4,16 @@ import {Link} from "react-router-dom";
 import Card from "../pages/Card";
 
 
-export default function ProductList({category,setCategory, page, setPage, setTotalPage}) {
+export default function ProductList({category, setCategory, page, setPage, setTotalPage}) {
 
     const [products, setProducts] = useState([]);
     const [modal, setModal] = useState(false);
-    const [product, setProduct] = useState({name: "", price: 0, photoUrl: ""});
+    const [product, setProduct] = useState({});
 
     async function getAllProducts() {
         const url = "http://192.168.1.67:8080/products/custom";
         const response = await axios.get(url, {
-            params:{
+            params: {
                 category,
                 page
             }
@@ -23,32 +23,46 @@ export default function ProductList({category,setCategory, page, setPage, setTot
         setTotalPage(response.data.totalPages)
     }
 
+    async function getProductCard(name) {
+        const url = "http://localhost:8080/products/get";
+        const response = await axios.get(url, {
+            params: {
+                name
+            }
+        })
+        console.log(response)
+        setProduct(response.data)
+    }
+
+
     useEffect(() => {
         getAllProducts()
     }, [category, page])
 
-    function setProductCard(productName, photoUrl) {
+    function setProductCard({name, photoUrl, minPrice, minStore}) {
         //добавить get запрос для получения полной информации по продукту и всем ценам
-        setProduct({...product, name: productName, photoUrl })
+        //set временное решение для тех карточек у которых нет данных в бд
+        // setProduct({name, photoUrl, minPrice, minStore})
+        getProductCard(name)
+
     }
 
     return (
         <div className="bg-gray-100 m-1 w-full">
-            <Card open={modal} setOpen={setModal} productUnit={product}/>
+            <Card open={modal} setOpen={setModal} product={product}/>
             <div className="mx-auto max-w-2xl py-16 px-4 sm:py-18 sm:px-6 lg:max-w-7xl lg:px-8">
                 <h1 className=" mb-10 text-xl">Продукты</h1>
 
                 <div
-                    className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 grid-auto-rows: minmax(3fr, 4fr)">
+                    className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
                     {products.map((product) => (
                         <div key={product.id} className="group">
                             {/*<Link to="/card">*/}
                             <div
-                                className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-w-7 xl:aspect-h-8"
+                                className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-w-7 xl:aspect-h-8 cursor-pointer"
                                 onClick={() => {
                                     setModal(true)
-                                    console.log(product.name)
-                                    setProductCard(product.name, product.photoUrl)
+                                    setProductCard(product)
                                 }}>
                                 <img
                                     src={product.photoUrl}

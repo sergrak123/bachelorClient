@@ -23,7 +23,7 @@ export default function Category({category,setCategory, setPage}) {
 
     const [value, setValue] = useState("");
     return (
-        <nav className="space-y-1 pt-5 pl-5" aria-label="Sidebar">
+        <nav className="space-y-1 pt-5 pl-5 cursor-pointer">
             {navigation.map((item) => (
                 <a
                     key={item.name}
