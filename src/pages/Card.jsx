@@ -1,19 +1,3 @@
-/*
-  This example requires Tailwind CSS v2.0+
-
-  This example requires some changes to your config:
-
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/aspect-ratio'),
-    ],
-  }
-  ```
-*/
 import {Fragment, useEffect, useRef, useState} from 'react'
 import {Dialog, RadioGroup, Transition} from '@headlessui/react'
 import {ShieldCheckIcon, XIcon} from '@heroicons/react/outline'
@@ -21,20 +5,6 @@ import {CheckIcon, QuestionMarkCircleIcon, StarIcon} from '@heroicons/react/soli
 import lentLogo from "../images/logo-lenta.png"
 
 
-// const product = {
-//     name: 'Everyday Ruck Snack',
-//     price: '₽220',
-//     rating: 3.9,
-//     href: '#',
-//     imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-quick-preview-03-detail.jpg',
-//     imageAlt: 'Interior of light green canvas bag with padded laptop sleeve and internal organization pouch.',
-//     sizes: [
-//         {name: '18L', description: '100'},
-//         {name: '20L', description: '150 '},
-//         {name: '20L', description: '150 '},
-//
-//     ],
-// }
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -43,11 +13,17 @@ function classNames(...classes) {
 export default function Card({open, setOpen, product}) {
     const [selectedSize, setSelectedSize] = useState({storeId: 0, price: 0})
     let completeButtonRef = useRef(null)
-    const [stores, setStores] = useState([])
+    // const [stores, setStores] = useState(product)
 
-    useEffect(() => {
-        setStores(product.cartUnits)
-    }, [])
+    const stores = product.cartUnits
+    // console.log(stores)
+    // console.log("STORES")
+
+    // useEffect(() => {
+    //     setStores(product.cartUnits)
+    //     console.log(stores)
+    //     console.log("STORES")
+    // }, [])
 
     return (
         <Transition.Root show={open} as={Fragment}>
@@ -148,8 +124,7 @@ export default function Card({open, setOpen, product}) {
                                             <div className="mt-6 flex items-center">
                                                 <CheckIcon className="flex-shrink-0 w-5 h-5 text-green-500"
                                                            aria-hidden="true"/>
-                                                <p className="ml-2 font-medium text-gray-500">In stock and ready to
-                                                    ship</p>
+                                                <p className="ml-2 font-medium text-gray-500">Есть в наличии</p>
                                             </div>
                                         </section>
 
@@ -167,47 +142,8 @@ export default function Card({open, setOpen, product}) {
                                                             Магазины
                                                         </RadioGroup.Label>
 
-
-                                                        {/*<div className="mt-1 grid grid-cols-1 gap-4 sm:grid-cols-2">*/}
-                                                        {/*    {product.cartUnits.map((size) => (*/}
-                                                        {/*        <RadioGroup.Option*/}
-                                                        {/*            as="div"*/}
-                                                        {/*            key={size.name}*/}
-                                                        {/*            value={size}*/}
-                                                        {/*            className={({active}) =>*/}
-                                                        {/*                classNames(*/}
-                                                        {/*                   */}
-                                                        {/*                    'relative block border border-gray-300 rounded-lg p-4 cursor-pointer focus:outline-none bg-green-50'*/}
-                                                        {/*                )*/}
-                                                        {/*            }*/}
-                                                        {/*        >*/}
-                                                        {/*            {({active, checked}) => (*/}
-                                                        {/*                <>*/}
-                                                        {/*                    <RadioGroup.Label as="p"*/}
-                                                        {/*                                      className="text-base font-medium text-gray-900">*/}
-                                                        {/*                        {size.name}*/}
-                                                        {/*                    </RadioGroup.Label>*/}
-                                                        {/*                    <RadioGroup.Description as="p"*/}
-                                                        {/*                                            className="mt-1 text-sm text-gray-500">*/}
-                                                        {/*                        {size.description}*/}
-                                                        {/*                    </RadioGroup.Description>*/}
-                                                        {/*                    <div*/}
-                                                        {/*                        className={classNames(*/}
-                                                        {/*                            active ? 'border-2' : 'border-2',*/}
-                                                        {/*                            checked ? 'border-green-500' : 'border-transparent',*/}
-                                                        {/*                            'absolute -inset-px rounded-lg pointer-events-none'*/}
-                                                        {/*                        )}*/}
-                                                        {/*                        aria-hidden="true"*/}
-                                                        {/*                    />*/}
-                                                        {/*                </>*/}
-                                                        {/*            )}*/}
-                                                        {/*        </RadioGroup.Option>*/}
-                                                        {/*    ))}*/}
-                                                        {/*</div>*/}
-
-
                                                         <div className="mt-5 grid grid-cols-2 gap-2">
-                                                            {stores.map(prod => (
+                                                            {product.cartUnits?.map((prod) => (
                                                                 <RadioGroup.Option
                                                                     as="div"
                                                                     key={prod.storeId}
@@ -268,7 +204,7 @@ export default function Card({open, setOpen, product}) {
                                                         onClick={(e) => {
                                                             e.preventDefault()
                                                             setOpen(false)
-                                                            stores.map(p => console.log(p))
+                                                            // stores.map(p => console.log(p))
                                                         }}
                                                         className="w-full bg-green-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-green-700 "
                                                     >
