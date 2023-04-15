@@ -42,7 +42,7 @@ export default function ProductList({category, setCategory, page, setPage, setTo
     function setProductCard({name, photoUrl, minPrice, minStore}) {
         //добавить get запрос для получения полной информации по продукту и всем ценам
         //set временное решение для тех карточек у которых нет данных в бд
-        // setProduct({name, photoUrl, minPrice, minStore})
+        setProduct({name, photoUrl, minPrice, minStore})
         getProductCard(name)
 
     }
