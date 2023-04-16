@@ -12,21 +12,13 @@ function classNames(...classes) {
 }
 
 export default function Card({open, setOpen, product}) {
-    const [selectedSize, setSelectedSize] = useState({storeId: 0, price: 0})
+    const [selectedStore, setSelectedStore] = useState()
     let completeButtonRef = useRef(null)
-    // const [storess, setStoress] = useState()
-    // console.log(storess)
-
-    const stores = product.cartUnits
-    // console.log(stores)
-    // console.log("STORES")
 
     //используем props как переменную напрямую без перезаписи,если нужен state то используем useEffect+ depth за изменением props
-    // useEffect(() => {
-    //     setStoress(product.name)
-    //     console.log(storess)
-    //     console.log("STORESsds")
-    // }, [product])
+    useEffect(() => {
+        setSelectedStore(product.cartUnits?.[0])
+    }, [product])
 
 
     let storeImg = [
@@ -114,7 +106,7 @@ export default function Card({open, setOpen, product}) {
                                                     <div className="flex items-center">
                                                         <div>
                                                             <img src={storeImg.find(item => item.storeId === product.minStore)?.src}
-                                                                 className="object-center object-cover h-6"/>
+                                                                 className="object-center object-scale-down h-6 w-20"/>
                                                         </div>
                                                         {/*<div className="flex items-center">*/}
                                                         {/*    {[0, 1, 2, 3, 4].map((rating) => (*/}
@@ -149,7 +141,7 @@ export default function Card({open, setOpen, product}) {
                                             <form>
                                                 <div>
                                                     {/* Size selector */}
-                                                    <RadioGroup value={selectedSize} onChange={setSelectedSize}>
+                                                    <RadioGroup value={selectedStore} onChange={setSelectedStore}>
                                                         <RadioGroup.Label
                                                             className="block text-sm font-medium text-gray-700">
                                                             Магазины
@@ -172,7 +164,9 @@ export default function Card({open, setOpen, product}) {
                                                                             <div>
                                                                                 <img
                                                                                     src={storeImg.find(item => item.storeId === prod.storeId)?.src}
-                                                                                    className="object-center object-cover h-4 "/>
+                                                                                    // className="object-center object-cover h-4"/>
+                                                                                    className="object-center object-scale-down w-14"/>
+                                                                                    {/*поменять на 12 с 14,className="object-center object-scale-down h-4 w-14"/>*/}
                                                                                 {/*{prod.storeId}*/}
                                                                             </div>
 

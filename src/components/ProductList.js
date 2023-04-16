@@ -24,7 +24,7 @@ export default function ProductList({category, setCategory, page, setPage, setTo
     }
 
     async function getProductCard(name) {
-        const url = "http://localhost:8080/products/get";
+        const url = "http://192.168.1.67:8080/products/get";
         const response = await axios.get(url, {
             params: {
                 name
