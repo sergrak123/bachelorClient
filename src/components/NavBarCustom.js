@@ -34,7 +34,7 @@ export default function NavBarCustom() {
         {name: 'Выйти', href: '', action: logout},
     ]
     return (
-        <div className="bg-gray-800 w-full">
+        <div className="bg-gray-800 w-full bg-green-700 bg-[#00693E]">
 
             <div className="max-w-10xl mx-auto px-2 sm:px-4 lg:divide-y lg:divide-gray-700 lg:px-8">
                 <div className="relative h-16 {/*h-20*/} flex justify-between">
@@ -46,7 +46,7 @@ export default function NavBarCustom() {
                             {/*    alt="Workflow"*/}
                             {/*/>*/}
                             <Link to="/catalog">
-                                <div className="text-white font-montserrat font-light text-2xl">FoodFinder</div>
+                                <div className="text-white font-montserrat font-light text-2xl {/*font-normal*/}">FoodFinder</div>
                             </Link>
 
                         </div>
@@ -64,7 +64,8 @@ export default function NavBarCustom() {
                                 <input
                                     id="search"
                                     name="search"
-                                    className="block w-full bg-gray-700 border border-transparent rounded-md py-2 pl-10 pr-3 text-sm placeholder-gray-400 focus:outline-none focus:bg-white focus:border-white focus:ring-white focus:text-gray-900 focus:placeholder-gray-500 sm:text-sm"
+                                    className="block w-full bg-gray-700 border border-transparent rounded-md py-2 pl-10 pr-3 text-sm placeholder-gray-400 focus:outline-none focus:bg-white focus:border-white focus:ring-white focus:text-gray-900 focus:placeholder-gray-500 sm:text-sm
+                                    bg-white border-white ring-white text-gray-900 placeholder-gray-500"
                                     // placeholder="Search"
                                     placeholder="Поиск"
                                     type="search"
@@ -91,7 +92,7 @@ export default function NavBarCustom() {
                         <Link to="/cart">
                             <button
                                 type="button"
-                                className="bg-gray-800 flex-shrink-0 rounded-full p-1 text-gray-400 hover:text-white focus:outline-none  focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                                className="flex-shrink-0 rounded-full p-1 text-gray-400 text-gray-200 hover:text-white focus:outline-none  focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                                 <span className="sr-only">View shopping cart</span>
                                 <ShoppingCartIcon className="h-6 w-6" aria-hidden="true"/>
                             </button>

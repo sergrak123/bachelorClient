@@ -26,9 +26,10 @@ export default function Pagination({page, setPage,totalPage}) {
                 {/*    Назад*/}
                 {/*</a>*/}
             </div>
-            <div className="hidden md:-mt-px md:flex">
+            <div className="hidden md:-mt-px md:flex cursor-pointer">
                 {pagesArray.map(p => (
                     <a
+                        key={p}
                         onClick={() => {
                             setPage(p)
                         }}
