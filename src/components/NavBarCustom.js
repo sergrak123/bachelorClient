@@ -1,5 +1,5 @@
 import {Fragment, useContext} from 'react'
-import {Disclosure, Menu, Transition} from '@headlessui/react'
+import { Menu, Transition} from '@headlessui/react'
 import {SearchIcon} from '@heroicons/react/solid'
 import {ShoppingCartIcon, LockClosedIcon} from '@heroicons/react/outline'
 

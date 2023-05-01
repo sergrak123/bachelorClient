@@ -1,6 +1,6 @@
 /* This example requires Tailwind CSS v2.0+ */
-import {ArrowNarrowLeftIcon, ArrowNarrowRightIcon} from '@heroicons/react/solid'
-import {useState} from "react";
+//import {ArrowNarrowLeftIcon, ArrowNarrowRightIcon} from '@heroicons/react/solid'
+//import {useState} from "react";
 import {getPagesArray} from "../utils/pages";
 
 

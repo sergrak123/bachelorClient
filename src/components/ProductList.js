@@ -4,11 +4,8 @@ import {
     addToCart,
     decreaseCount,
     increaseCount,
-    removeFromCart,
-    setIsCartOpen,
 } from "../state";
 import axios from "axios";
-import {Link} from "react-router-dom";
 import Card from "../pages/Card";
 
 
@@ -19,7 +16,6 @@ export default function ProductList({category, setCategory, page, setPage, setTo
     const [product, setProduct] = useState({});
     const dispatch = useDispatch();
     const cart = useSelector((state) => state.cart.cart);
-    const quantity = 1;
 
     async function getAllProducts() {
         const url = "http://192.168.1.67:8080/products/custom";
@@ -106,7 +102,7 @@ export default function ProductList({category, setCategory, page, setPage, setTo
                                         ? (
                                             <button
                                                 className="{/*mr-2*/} w-10 h-8 {/*bg-cyan-700*/} {/*bg-emerald-600*/} bg-gray-700 {/*bg-blue-500*/} rounded-md text-white {/*hover:opacity-70*/} hover:bg-gray-800"
-                                                onClick={() => dispatch(addToCart({ item: { id: product.id, count: 1 } }))}>+
+                                                onClick={() => dispatch(addToCart({ item: { id: product.id, count: 1, storeId: product.minStore } }))}>+
                                             </button>)
                                         : (
                                             <div className="flex justify-center items-center my-0.5">

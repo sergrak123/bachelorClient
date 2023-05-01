@@ -1,5 +1,8 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { CheckIcon, ClockIcon } from '@heroicons/react/solid'
+import {CheckIcon, ClockIcon} from '@heroicons/react/solid'
+import {useSelector, useDispatch} from "react-redux";
+import axios from "axios";
+import {useEffect, useState} from "react";
 
 const products = [
     {
@@ -29,10 +32,27 @@ const products = [
 ]
 
 export default function ShoppingCart() {
+    const dispatch = useDispatch();
+    const cart = useSelector((state) => state.cart.cart);
+    const [cartList, setCartList] = useState([]);
+
+    async function getCart() {
+        const url = "http://192.168.1.67:8080/cart";
+        const response = await axios.post(url,
+            [...cart]
+        )
+        console.log(response)
+        setCartList(response.data)
+    }
+
+    useEffect(() => {
+        getCart()
+    }, [cart])
+
     return (
-        <div className="bg-white">
+        <div className="bg-white min-h-screen">
             <div className="max-w-2xl mx-auto py-14 px-4  sm:px-6 lg:px-0">
-                <h1 className="text-3xl font-extrabold text-center tracking-tight text-gray-900 sm:text-4xl">Корзина</h1>
+                <h1 className="text-3xl  text-center tracking-tight text-gray-900 sm:text-4xl">Корзина</h1>
 
                 <form className="mt-12">
                     <section aria-labelledby="cart-heading">
@@ -41,12 +61,12 @@ export default function ShoppingCart() {
                         </h2>
 
                         <ul role="list" className="border-t border-b border-gray-200 divide-y divide-gray-200">
-                            {products.map((product) => (
+                            {cartList?.map((product) => (
                                 <li key={product.id} className="flex py-6">
                                     <div className="flex-shrink-0">
                                         <img
-                                            src={product.imageSrc}
-                                            alt={product.imageAlt}
+                                            src={product?.photoUrl}
+                                            alt={product.name}
                                             className="w-24 h-24 rounded-md object-center object-cover sm:w-32 sm:h-32"
                                         />
                                     </div>
@@ -55,29 +75,25 @@ export default function ShoppingCart() {
                                         <div>
                                             <div className="flex justify-between">
                                                 <h4 className="text-sm">
-                                                    <a href={product.href} className="font-medium text-gray-700 hover:text-gray-800">
+                                                    <div
+                                                       className="font-medium text-gray-700 hover:text-gray-800">
                                                         {product.name}
-                                                    </a>
+                                                    </div>
                                                 </h4>
-                                                <p className="ml-4 text-sm font-medium text-gray-900">{product.price}</p>
+                                                <p className="ml-4 text-sm font-medium text-gray-900">{product.price} ₽</p>
                                             </div>
-                                            <p className="mt-1 text-sm text-gray-500">{product.color}</p>
-                                            <p className="mt-1 text-sm text-gray-500">{product.size}</p>
+                                            <p className="mt-1 text-sm text-gray-500">{product.quantity} шт</p>
+                                            {/*<p className="mt-1 text-sm text-gray-500">{product.size}</p>*/}
                                         </div>
 
                                         <div className="mt-4 flex-1 flex items-end justify-between">
                                             <p className="flex items-center text-sm text-gray-700 space-x-2">
-                                                {product.inStock ? (
-                                                    <CheckIcon className="flex-shrink-0 h-5 w-5 text-green-500" aria-hidden="true" />
-                                                ) : (
-                                                    <ClockIcon className="flex-shrink-0 h-5 w-5 text-gray-300" aria-hidden="true" />
-                                                )}
 
-                                                <span>{product.inStock ? 'In stock' : `Will ship in ${product.leadTime}`}</span>
                                             </p>
                                             <div className="ml-4">
-                                                <button type="button" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                                                    <span>Remove</span>
+                                                <button type="button"
+                                                        className="text-sm font-medium text-red-400 hover:text-indigo-500">
+                                                    <span>Удалить</span>
                                                 </button>
                                             </div>
                                         </div>
@@ -87,31 +103,45 @@ export default function ShoppingCart() {
                         </ul>
                     </section>
 
-                    {/* Order summary */}
-                    <section aria-labelledby="summary-heading" className="mt-10">
-                        <h2 id="summary-heading" className="sr-only">
-                            Order summary
-                        </h2>
-
-                        <div>
-                            <dl className="space-y-4">
-                                <div className="flex items-center justify-between">
-                                    <dt className="text-base font-medium text-gray-900">Итого</dt>
-                                    <dd className="ml-4 text-base font-medium text-gray-900">$96.00</dd>
-                                </div>
-                            </dl>
-                            <p className="mt-1 text-sm text-gray-500">Shipping and taxes will be calculated at checkout.</p>
+                    {cartList?.length === 0
+                        ?<div className="flex justify-center items-center flex-col mt-24">
+                            <img src="https://yastatic.net/s3/lavka-web/public/assets/images/emptyCart@2x.png" className="h-32"/>
+                            <div className="flex justify-center text-3xl text-gray-400 mt-7">
+                                В корзине пока пусто
+                            </div>
+                            <div className="text-gray-900 mt-2">
+                                Чтобы оформить заказ, положите в нее товары
+                            </div>
                         </div>
+                        
+                        
+                        :
+                        <section aria-labelledby="summary-heading" className="mt-10">
+                            <h2 id="summary-heading" className="sr-only">
+                                Order summary
+                            </h2>
 
-                        <div className="mt-10">
-                            <button
-                                type="submit"
-                                className="w-full bg-green-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">
-                                Оформить заказ
-                            </button>
-                        </div>
+                            <div>
+                                <dl className="space-y-4">
+                                    <div className="flex items-center justify-between">
+                                        <dt className="text-base font-medium text-gray-900">Итого</dt>
+                                        <dd className="ml-4 text-base font-medium text-gray-900">$96.00</dd>
+                                    </div>
+                                </dl>
+                                <p className="mt-1 text-sm text-gray-500">Shipping and taxes will be calculated at
+                                    checkout.</p>
+                            </div>
 
-                    </section>
+                            <div className="mt-10">
+                                <button
+                                    type="submit"
+                                    className="w-full bg-green-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">
+                                    Оформить заказ
+                                </button>
+                            </div>
+                        </section>
+                    }
+
                 </form>
             </div>
         </div>
