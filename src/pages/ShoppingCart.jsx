@@ -3,33 +3,34 @@ import {CheckIcon, ClockIcon} from '@heroicons/react/solid'
 import {useSelector, useDispatch} from "react-redux";
 import axios from "axios";
 import {useEffect, useState} from "react";
+import {decreaseCount, removeFromCart} from "../state";
 
-const products = [
-    {
-        id: 1,
-        name: 'Rich Bitter тоник-мандарин 1 л',
-        href: '#',
-        price: '$32.00',
-        color: '',
-        size: '',
-        inStock: true,
-        imageSrc: 'https://clck.ru/346Lpt',
-        imageAlt: 'Front side of mint cotton t-shirt with wavey lines pattern.',
-    },
-    {
-        id: 2,
-        name: 'Добрый кола 1,5 л',
-        href: '#',
-        price: '$32.00',
-        color: '',
-        inStock: false,
-        leadTime: '7-8 years',
-        size: '',
-        imageSrc: 'https://clck.ru/346Loe',
-        imageAlt: 'Front side of charcoal cotton t-shirt.',
-    },
-    // More products...
-]
+// const products = [
+//     {
+//         id: 1,
+//         name: 'Rich Bitter тоник-мандарин 1 л',
+//         href: '#',
+//         price: '$32.00',
+//         color: '',
+//         size: '',
+//         inStock: true,
+//         imageSrc: 'https://clck.ru/346Lpt',
+//         imageAlt: 'Front side of mint cotton t-shirt with wavey lines pattern.',
+//     },
+//     {
+//         id: 2,
+//         name: 'Добрый кола 1,5 л',
+//         href: '#',
+//         price: '$32.00',
+//         color: '',
+//         inStock: false,
+//         leadTime: '7-8 years',
+//         size: '',
+//         imageSrc: 'https://clck.ru/346Loe',
+//         imageAlt: 'Front side of charcoal cotton t-shirt.',
+//     },
+//     // More products...
+// ]
 
 export default function ShoppingCart() {
     const dispatch = useDispatch();
@@ -62,7 +63,7 @@ export default function ShoppingCart() {
 
                         <ul role="list" className="border-t border-b border-gray-200 divide-y divide-gray-200">
                             {cartList?.map((product) => (
-                                <li key={product.id} className="flex py-6">
+                                <li key={product.productId} className="flex py-6">
                                     <div className="flex-shrink-0">
                                         <img
                                             src={product?.photoUrl}
@@ -92,7 +93,9 @@ export default function ShoppingCart() {
                                             </p>
                                             <div className="ml-4">
                                                 <button type="button"
-                                                        className="text-sm font-medium text-red-400 hover:text-indigo-500">
+                                                        className="text-sm font-medium text-red-400 hover:text-red-500"
+                                                        onClick={() => dispatch(removeFromCart({ id: product.productId }))}
+                                                >
                                                     <span>Удалить</span>
                                                 </button>
                                             </div>
