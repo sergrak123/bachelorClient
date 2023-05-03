@@ -19,7 +19,7 @@ export default function ProductList({category, setCategory, page, setPage, setTo
     const cart = useSelector((state) => state.cart.cart);
 
     async function getAllProducts() {
-        const url = "http://192.168.1.67:8080/products/custom";
+        const url = "http://localhost:8080/products/custom";
         const response = await axios.get(url, {
             params: {
                 category,
