@@ -42,8 +42,16 @@ export default function ShoppingCart() {
         const response = await axios.post(url,
             [...cart]
         )
-        console.log(response)
-        setCartList(response.data)
+        setCartList(composeCart(response.data))
+    }
+
+    function composeCart(data){
+        let composedCart = [];
+        Object.keys(data).forEach(key => {
+            let value = data[key]
+            composedCart.push({storeId: key, items: value})
+        });
+        return composedCart
     }
 
     useEffect(() => {
@@ -60,55 +68,60 @@ export default function ShoppingCart() {
                         <h2 id="cart-heading" className="sr-only">
                             Items in your shopping cart
                         </h2>
+                        {cartList.map((cartInStore) => (
+                            <div>
+                                <h1>Магазин {cartInStore.storeId}</h1>
+                                <ul role="list" key={cartInStore.storeId} className="border-t border-b border-gray-200 divide-y divide-gray-200">
+                                    {cartInStore.items?.map((product) => (
+                                        <li key={product.productId} className="flex py-6">
+                                            <div className="flex-shrink-0">
+                                                <img
+                                                    src={product.photoUrl}
+                                                    alt={product.name}
+                                                    className="w-24 h-24 rounded-md object-center object-cover sm:w-32 sm:h-32"
+                                                />
+                                            </div>
 
-                        <ul role="list" className="border-t border-b border-gray-200 divide-y divide-gray-200">
-                            {cartList?.map((product) => (
-                                <li key={product.productId} className="flex py-6">
-                                    <div className="flex-shrink-0">
-                                        <img
-                                            src={product?.photoUrl}
-                                            alt={product.name}
-                                            className="w-24 h-24 rounded-md object-center object-cover sm:w-32 sm:h-32"
-                                        />
-                                    </div>
-
-                                    <div className="ml-4 flex-1 flex flex-col sm:ml-6">
-                                        <div>
-                                            <div className="flex justify-between">
-                                                <h4 className="text-sm">
-                                                    <div
-                                                       className="font-medium text-gray-700 hover:text-gray-800">
-                                                        {product.name}
+                                            <div className="ml-4 flex-1 flex flex-col sm:ml-6">
+                                                <div>
+                                                    <div className="flex justify-between">
+                                                        <h4 className="text-sm">
+                                                            <div
+                                                                className="font-medium text-gray-700 hover:text-gray-800">
+                                                                {product.name}
+                                                            </div>
+                                                        </h4>
+                                                        <p className="ml-4 text-sm font-medium text-gray-900">{product.price} ₽</p>
                                                     </div>
-                                                </h4>
-                                                <p className="ml-4 text-sm font-medium text-gray-900">{product.price} ₽</p>
-                                            </div>
-                                            <p className="mt-1 text-sm text-gray-500">{product.quantity} шт</p>
-                                            {/*<p className="mt-1 text-sm text-gray-500">{product.size}</p>*/}
-                                        </div>
+                                                    <p className="mt-1 text-sm text-gray-500">{product.quantity} шт</p>
+                                                    {/*<p className="mt-1 text-sm text-gray-500">{product.size}</p>*/}
+                                                </div>
 
-                                        <div className="mt-4 flex-1 flex items-end justify-between">
-                                            <p className="flex items-center text-sm text-gray-700 space-x-2">
+                                                <div className="mt-4 flex-1 flex items-end justify-between">
+                                                    <p className="flex items-center text-sm text-gray-700 space-x-2">
 
-                                            </p>
-                                            <div className="ml-4">
-                                                <button type="button"
-                                                        className="text-sm font-medium text-red-400 hover:text-red-500"
-                                                        onClick={() => dispatch(removeFromCart({ id: product.productId }))}
-                                                >
-                                                    <span>Удалить</span>
-                                                </button>
+                                                    </p>
+                                                    <div className="ml-4">
+                                                        <button type="button"
+                                                                className="text-sm font-medium text-red-400 hover:text-red-500"
+                                                                onClick={() => dispatch(removeFromCart({id: product.productId}))}
+                                                        >
+                                                            <span>Удалить</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            ))}
-                        </ul>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+
+                        ))}
                     </section>
-
-                    {cartList?.length === 0
-                        ?<div className="flex justify-center items-center flex-col mt-24">
-                            <img src="https://yastatic.net/s3/lavka-web/public/assets/images/emptyCart@2x.png" className="h-32"/>
+                    {cart?.length === 0
+                        ? <div className="flex justify-center items-center flex-col mt-24">
+                            <img src="https://yastatic.net/s3/lavka-web/public/assets/images/emptyCart@2x.png"
+                                 className="h-32"/>
                             <div className="flex justify-center text-3xl text-gray-400 mt-7">
                                 В корзине пока пусто
                             </div>
@@ -116,8 +129,8 @@ export default function ShoppingCart() {
                                 Чтобы оформить заказ, положите в нее товары
                             </div>
                         </div>
-                        
-                        
+
+
                         :
                         <section aria-labelledby="summary-heading" className="mt-10">
                             <h2 id="summary-heading" className="sr-only">
@@ -148,5 +161,5 @@ export default function ShoppingCart() {
                 </form>
             </div>
         </div>
-    )
+    );
 }
