@@ -4,7 +4,7 @@ import {SearchIcon} from '@heroicons/react/solid'
 import {ShoppingCartIcon, LockClosedIcon} from '@heroicons/react/outline'
 
 import {AuthContext} from "../context";
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import React from 'react';
 
 const user = {
@@ -22,6 +22,7 @@ function classNames(...classes) {
 export default function NavBarCustom() {
 
     const {isAuth, setIsAuth} = useContext(AuthContext)
+    const location = useLocation();
 
     const logout = () => {
         setIsAuth(false)
@@ -34,7 +35,7 @@ export default function NavBarCustom() {
         {name: 'Выйти', href: '', action: logout},
     ]
     return (
-        <div className="bg-gray-800 w-full bg-green-700 bg-[#00693E]">
+        <div className="w-full bg-[#00693E]">
 
             <div className="max-w-10xl mx-auto px-2 sm:px-4 lg:divide-y lg:divide-gray-700 lg:px-8">
                 <div className="relative h-16 {/*h-20*/} flex justify-between">
@@ -52,28 +53,32 @@ export default function NavBarCustom() {
                         </div>
                     </div>
 
-                    <div className="relative z-0 flex-1 px-2 flex items-center justify-center sm:absolute sm:inset-0">
-                        <div className="w-full sm:max-w-xs">
-                            <label htmlFor="search" className="sr-only">
-                                Search
-                            </label>
-                            <div className="relative">
-                                <div className="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center">
-                                    <SearchIcon className="h-5 w-5 text-gray-400" aria-hidden="true"/>
-                                </div>
-                                <input
-                                    id="search"
-                                    name="search"
-                                    className="block w-full bg-gray-700 border border-transparent rounded-md py-2 pl-10 pr-3 text-sm placeholder-gray-400 focus:outline-none focus:bg-white focus:border-white focus:ring-white focus:text-gray-900 focus:placeholder-gray-500 sm:text-sm
+                    {location.pathname === "/catalog" &&
+                        <div className="relative z-0 flex-1 px-2 flex items-center justify-center sm:absolute sm:inset-0">
+                            <div className="w-full sm:max-w-xs">
+                                <label htmlFor="search" className="sr-only">
+                                    Search
+                                </label>
+                                <div className="relative">
+                                    <div className="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center">
+                                        <SearchIcon className="h-5 w-5 text-gray-400" aria-hidden="true"/>
+                                    </div>
+                                    <input
+                                        id="search"
+                                        name="search"
+                                        className="block w-full bg-gray-700 border border-transparent rounded-md py-2 pl-10 pr-3 text-sm placeholder-gray-400 focus:outline-none focus:bg-white focus:border-white focus:ring-white focus:text-gray-900 focus:placeholder-gray-500 sm:text-sm
                                     bg-white border-white ring-white text-gray-900 placeholder-gray-500"
-                                    // placeholder="Search"
-                                    placeholder="Поиск"
-                                    type="search"
-                                    autoComplete="off"
-                                />
+                                        // placeholder="Search"
+                                        placeholder="Поиск"
+                                        type="search"
+                                        autoComplete="off"
+                                    />
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    }
+
+
 
                     {/*<div className="relative z-10 flex items-center lg:hidden">*/}
                     {/*    /!* Mobile menu button *!/*/}
@@ -92,7 +97,7 @@ export default function NavBarCustom() {
                         <Link to="/cart">
                             <button
                                 type="button"
-                                className="flex-shrink-0 rounded-full p-1 text-gray-400 text-gray-200 hover:text-white focus:outline-none  focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                                className="flex-shrink-0 rounded-full p-1 text-gray-200 hover:text-white focus:outline-none focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                                 <span className="sr-only">View shopping cart</span>
                                 <ShoppingCartIcon className="h-6 w-6" aria-hidden="true"/>
                             </button>
@@ -143,7 +148,7 @@ export default function NavBarCustom() {
                             : <Link to="/login">
                                 <button
                                     type="button"
-                                    className="inline-flex items-center px-4 py-2 ml-3 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gray-700 hover:bg-gray-600 ">
+                                    className="inline-flex items-center px-4 py-2 ml-3 border border-transparent shadow-sm text-sm font-medium rounded-md text-gray-800 bg-gray-50 hover:bg-gray-100 ">
                                     <LockClosedIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
                                     Войти
                                 </button>

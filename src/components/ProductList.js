@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { useSelector, useDispatch } from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
 import {
     addToCart,
     decreaseCount,
@@ -14,7 +14,7 @@ export default function ProductList({category, setCategory, page, setPage, setTo
     const [products, setProducts] = useState([]);
     const [modal, setModal] = useState(false);
     const [product, setProduct] = useState({});
-    const size = 4;
+    const size = 8;
     const dispatch = useDispatch();
     const cart = useSelector((state) => state.cart.cart);
 
@@ -33,7 +33,7 @@ export default function ProductList({category, setCategory, page, setPage, setTo
     }
 
     async function getProductCard(name) {
-        const url = "http://192.168.1.67:8080/products/get";
+        const url = "http://localhost:8080/products/get";
         const response = await axios.get(url, {
             params: {
                 name
@@ -100,25 +100,34 @@ export default function ProductList({category, setCategory, page, setPage, setTo
                                 <p className="mt-1 text-l font-medium text-gray-900 mr-0 ">от {product.minPrice} ₽</p>
                                 {}
                                 <div className="mt-auto">
-                                    { getItemQuantity(product.id) === 0
+                                    {getItemQuantity(product.id) === 0
                                         ? (
                                             <button
                                                 className="{/*mr-2*/} w-10 h-8 {/*bg-cyan-700*/} {/*bg-emerald-600*/} bg-gray-700 {/*bg-blue-500*/} rounded-md text-white {/*hover:opacity-70*/} hover:bg-gray-800 select-none"
-                                                onClick={() => dispatch(addToCart({ item: { id: product.id, count: 1, storeId: product.minStore } }))}>+
+                                                onClick={() => dispatch(addToCart({
+                                                    item: {
+                                                        id: product.id,
+                                                        count: 1,
+                                                        storeId: product.minStore
+                                                    }
+                                                }))}>+
                                             </button>)
                                         : (
                                             <div className="flex justify-center items-center my-0.5">
-                                                <button className="flex items-center justify-center w-8 h-7 bg-gray-700 rounded-md text-white hover:bg-gray-800 select-none"
-                                                        onClick={() => dispatch(decreaseCount({ id: product.id }))
-                                                }>
+                                                <button
+                                                    className="flex items-center justify-center w-8 h-7 rounded-md text-gray-800 hover:bg-gray-300 select-none bg-gray-200"
+                                                    onClick={() => dispatch(decreaseCount({id: product.id}))
+                                                    }>
                                                     -
                                                 </button>
                                                 <div className="px-2.5 select-none">
                                                     {getItemQuantity(product.id)}
                                                 </div>
-                                                <button className="flex items-center justify-center w-8 h-7 bg-gray-700 rounded-md text-white hover:bg-gray-800 select-none"
-                                                        onClick={() => dispatch(increaseCount({ id: product.id }))
-                                                        }>+</button>
+                                                <button
+                                                    className="flex items-center justify-center w-8 h-7 rounded-md text-gray-800 hover:bg-gray-300 select-none bg-gray-200"
+                                                    onClick={() => dispatch(increaseCount({id: product.id}))
+                                                    }>+
+                                                </button>
                                             </div>
                                         )}
                                 </div>

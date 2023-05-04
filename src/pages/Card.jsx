@@ -2,22 +2,38 @@ import {Fragment, useEffect, useRef, useState} from 'react'
 import {Dialog, RadioGroup, Transition} from '@headlessui/react'
 import {ShieldCheckIcon, XIcon} from '@heroicons/react/outline'
 import {CheckIcon, QuestionMarkCircleIcon, StarIcon} from '@heroicons/react/solid'
+import {useDispatch, useSelector} from "react-redux";
 import lentLogo from "../images/logo-lenta.png"
 import metroLogo from "../images/Metro.png"
 import vkusvillLogo from "../images/vkusvill.png"
+import {
+    addToCart,
+} from "../state";
 
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
+function getCounts(n) {
+    let result = []
+    for (let i = 1; i <= n; i++) {
+        result.push(i)
+    }
+    return result;
+}
+
 export default function Card({open, setOpen, product}) {
-    const [selectedStore, setSelectedStore] = useState()
+    const dispatch = useDispatch();
+    const cart = useSelector((state) => state.cart.cart);
+    const [selectedProduct, setSelectedProduct] = useState({})
+    const [quantity, setQuantity] = useState(1)
     let completeButtonRef = useRef(null)
 
     //используем props как переменную напрямую без перезаписи,если нужен state то используем useEffect+ depth за изменением props
     useEffect(() => {
-        setSelectedStore(product.cartUnits?.[0])
+        if (product?.cartUnits?.[0] != null)
+            setSelectedProduct(product.cartUnits?.[0])
     }, [product])
 
 
@@ -27,13 +43,20 @@ export default function Card({open, setOpen, product}) {
         {storeId: 3, name: "Вкусвилл", src: vkusvillLogo}
     ];
 
+    function getItemQuantity(id) {
+        return cart.find(item => item.id === id)?.count
+    }
+
     // let user = storeImg.find(item => item.storeId === 1).src;
     // console.log(user)
 
     return (
         <Transition.Root show={open} as={Fragment}>
             <Dialog as="div" initialFocus={completeButtonRef} className="fixed z-10 inset-0 overflow-y-auto"
-                    onClose={() => setOpen(false)}>
+                    onClose={() => {
+                        setOpen(false)
+                        setQuantity(1)
+                    }}>
                 <div className="flex min-h-screen text-center md:block md:px-2 lg:px-4" style={{fontSize: 0}}>
                     <Transition.Child
                         as={Fragment}
@@ -70,6 +93,7 @@ export default function Card({open, setOpen, product}) {
                                     className="absolute top-4 right-4 text-gray-400 hover:text-gray-500 sm:top-8 sm:right-6 md:top-6 md:right-6 lg:top-8 lg:right-8"
                                     onClick={() => {
                                         setOpen(false)
+                                        setQuantity(1)
                                     }}
                                 >
                                     <XIcon className="h-6 w-6"/>
@@ -99,14 +123,22 @@ export default function Card({open, setOpen, product}) {
                                             {/*</h3>*/}
 
                                             <div className="flex items-center">
-                                                <p className="text-lg text-gray-900 sm:text-xl">₽{product.minPrice}</p>
+                                                <div className="flex justify-between items-baseline text-lg text-gray-900 sm:text-xl">
+                                                    ₽{selectedProduct.price}
+                                                    {getItemQuantity(selectedProduct.productId)&&
+                                                        <div className="text-gray-500 text-sm ml-1">
+                                                             x{getItemQuantity(selectedProduct.productId)} шт
+                                                        </div>
+                                                    }
+                                                </div>
 
                                                 <div className="ml-4 pl-4 border-l border-gray-400">
 
                                                     <div className="flex items-center">
                                                         <div>
-                                                            <img src={storeImg.find(item => item.storeId === product.minStore)?.src}
-                                                                 className="object-center object-scale-down h-6 w-20"/>
+                                                            <img
+                                                                src={storeImg.find(item => item.storeId === selectedProduct.storeId)?.src}
+                                                                className="object-center object-scale-down h-6 w-20"/>
                                                         </div>
                                                         {/*<div className="flex items-center">*/}
                                                         {/*    {[0, 1, 2, 3, 4].map((rating) => (*/}
@@ -126,32 +158,48 @@ export default function Card({open, setOpen, product}) {
 
                                             </div>
 
-                                            <div className="mt-6 flex items-center">
-                                                <CheckIcon className="flex-shrink-0 w-5 h-5 text-green-500"
-                                                           aria-hidden="true"/>
-                                                <p className="ml-2 font-medium text-gray-500">Есть в наличии</p>
+                                            {/*<div className="mt-6 flex items-center">*/}
+                                            {/*    <CheckIcon className="flex-shrink-0 w-5 h-5 text-green-500"*/}
+                                            {/*               aria-hidden="true"/>*/}
+                                            {/*    <p className="ml-2 font-medium text-gray-500">Есть в наличии</p>*/}
+                                            {/*</div>*/}
+                                            <div className="w-1/6 mt-6">
+                                                <label className="block text-sm font-medium text-gray-700">
+                                                    Количество
+                                                </label>
+                                                <select
+                                                    className="mt-3 block w-full pl-3 pr-10 py-2 text-base border-gray-300 sm:text-sm rounded-md"
+                                                    onChange={e => {
+                                                        setQuantity(parseInt(e.target.value))
+                                                    }}
+                                                    value={quantity}
+                                                >
+                                                    {getCounts(10).map((item)=>(
+                                                        <option value={item}>{item}</option>
+                                                    ))}
+                                                </select>
                                             </div>
                                         </section>
 
-                                        <section aria-labelledby="options-heading" className="mt-6">
+                                        <section aria-labelledby="options-heading" className="mt-5">
                                             <h3 id="options-heading" className="sr-only">
                                                 Product options
                                             </h3>
 
                                             <form>
                                                 <div>
-                                                    {/* Size selector */}
-                                                    <RadioGroup value={selectedStore} onChange={setSelectedStore}>
+                                                    {/*selected для отображения выбранного элемента, value prod для отрисовки каждого элемента*/}
+                                                    <RadioGroup value={selectedProduct} onChange={setSelectedProduct}>
                                                         <RadioGroup.Label
                                                             className="block text-sm font-medium text-gray-700">
                                                             Магазины
                                                         </RadioGroup.Label>
 
-                                                        <div className="mt-5 grid grid-cols-2 gap-2 ">
-                                                            {product.cartUnits?.map((prod) => (
+                                                        <div className="mt-4 grid grid-cols-2 gap-3 ">
+                                                            {product?.cartUnits?.map((prod) => (
                                                                 <RadioGroup.Option
                                                                     as="div"
-                                                                    key={prod.storeId}
+                                                                    key={prod.productId}
                                                                     value={prod}
                                                                     className={({active}) =>
                                                                         classNames(
@@ -166,7 +214,7 @@ export default function Card({open, setOpen, product}) {
                                                                                     src={storeImg.find(item => item.storeId === prod.storeId)?.src}
                                                                                     // className="object-center object-cover h-4"/>
                                                                                     className="object-center object-scale-down w-14"/>
-                                                                                    {/*поменять на 12 с 14,className="object-center object-scale-down h-4 w-14"/>*/}
+                                                                                {/*поменять на 12 с 14,className="object-center object-scale-down h-4 w-14"/>*/}
                                                                                 {/*{prod.storeId}*/}
                                                                             </div>
 
@@ -257,10 +305,16 @@ export default function Card({open, setOpen, product}) {
                                                         // type="submit"
                                                         onClick={(e) => {
                                                             e.preventDefault()
-                                                            setOpen(false)
-                                                            // console.log(storess)
-                                                            // console.log(product)
-                                                            // stores.map(p => console.log(p))
+                                                            // setOpen(false)
+                                                            dispatch(addToCart({
+                                                                item: {
+                                                                    id: selectedProduct.productId,
+                                                                    count: quantity,
+                                                                    storeId: selectedProduct.storeId
+                                                                }
+                                                            }))
+                                                            setQuantity(1)
+                                                            console.log(selectedProduct)
                                                         }}
                                                         className="w-full bg-green-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-green-700 "
                                                     >

@@ -38,7 +38,7 @@ export default function ShoppingCart() {
     const [cartList, setCartList] = useState([]);
 
     async function getCart() {
-        const url = "http://192.168.1.67:8080/cart";
+        const url = "http://localhost:8080/cart";
         const response = await axios.post(url,
             [...cart]
         )
