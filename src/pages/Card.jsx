@@ -106,12 +106,6 @@ export default function Card({open, setOpen, product}) {
                                             <img src={product.photoUrl}
                                                  className="object-center object-cover"/>
                                         </div>
-                                        {/*<p className="absolute top-4 left-4 text-center sm:static sm:mt-6">*/}
-                                        {/*    <a */}
-                                        {/*       className="font-medium text-indigo-600 hover:text-indigo-500">*/}
-                                        {/*        View full details*/}
-                                        {/*    </a>*/}
-                                        {/*</p>*/}
                                     </div>
                                     <div className="sm:col-span-8 lg:col-span-7">
                                         <h2 className="text-2xl font-montserrat font-semibold text-gray-900 sm:pr-12"
@@ -138,37 +132,21 @@ export default function Card({open, setOpen, product}) {
                                                         <div>
                                                             <img
                                                                 src={storeImg.find(item => item.storeId === selectedProduct.storeId)?.src}
-                                                                className="object-center object-scale-down h-6 w-20"/>
+                                                                className="object-center object-scale-down h-6 w-20 rounded-md"/>
                                                         </div>
-                                                        {/*<div className="flex items-center">*/}
-                                                        {/*    {[0, 1, 2, 3, 4].map((rating) => (*/}
-                                                        {/*        <StarIcon*/}
-                                                        {/*            key={rating}*/}
-                                                        {/*            className={classNames(*/}
-                                                        {/*                1 > rating ? 'text-yellow-400' : 'text-gray-300',*/}
-                                                        {/*                'h-5 w-5 flex-shrink-0'*/}
-                                                        {/*            )}*/}
-                                                        {/*            aria-hidden="true"*/}
-                                                        {/*        />*/}
-                                                        {/*    ))}*/}
-                                                        {/*</div>*/}
+
                                                     </div>
 
                                                 </div>
 
                                             </div>
 
-                                            {/*<div className="mt-6 flex items-center">*/}
-                                            {/*    <CheckIcon className="flex-shrink-0 w-5 h-5 text-green-500"*/}
-                                            {/*               aria-hidden="true"/>*/}
-                                            {/*    <p className="ml-2 font-medium text-gray-500">Есть в наличии</p>*/}
-                                            {/*</div>*/}
                                             <div className="w-1/6 mt-6">
                                                 <label className="block text-sm font-medium text-gray-700">
                                                     Количество
                                                 </label>
                                                 <select
-                                                    className="mt-3 block w-full pl-3 pr-10 py-2 text-base border-gray-300 sm:text-sm rounded-md"
+                                                    className="mt-3 block w-full pl-3 pr-10 py-2 text-base border-gray-300 sm:text-sm rounded-md focus:outline-none focus:ring-0 focus:border-green-700"
                                                     onChange={e => {
                                                         setQuantity(parseInt(e.target.value))
                                                     }}
@@ -218,12 +196,6 @@ export default function Card({open, setOpen, product}) {
                                                                                 {/*{prod.storeId}*/}
                                                                             </div>
 
-                                                                            {/*<RadioGroup.Label as="p"*/}
-                                                                            {/*                  className="text-base font-medium text-gray-900">*/}
-                                                                            {/*    {size.name}*/}
-                                                                            {/*</RadioGroup.Label>*/}
-
-
                                                                             <RadioGroup.Description as="p"
                                                                                                     className="mt-1 text-sm text-gray-500">
                                                                                 {prod.price} ₽
@@ -240,50 +212,6 @@ export default function Card({open, setOpen, product}) {
                                                                     )}
                                                                 </RadioGroup.Option>
                                                             ))}
-
-                                                            {/*{product.cartUnits?.map((prod) => (*/}
-                                                            {/*    <RadioGroup.Option*/}
-                                                            {/*        as="div"*/}
-                                                            {/*        key={prod.storeId}*/}
-                                                            {/*        value={prod}*/}
-                                                            {/*        className={({active}) =>*/}
-                                                            {/*            classNames(*/}
-                                                            {/*                'relative flex justify-between border border-gray-300 rounded-lg p-3 cursor-pointer focus:outline-none '*/}
-                                                            {/*            )*/}
-                                                            {/*        }*/}
-                                                            {/*    >*/}
-                                                            {/*        {({active, checked}) => (*/}
-                                                            {/*            <>*/}
-                                                            {/*                <div>*/}
-                                                            {/*                    /!*<img src={lentLogo}*!/*/}
-                                                            {/*                    /!*     className="object-center object-cover h-7 "/>*!/*/}
-                                                            {/*                    {prod.storeId}*/}
-                                                            {/*                </div>*/}
-
-                                                            {/*                /!*<RadioGroup.Label as="p"*!/*/}
-                                                            {/*                /!*                  className="text-base font-medium text-gray-900">*!/*/}
-                                                            {/*                /!*    {size.name}*!/*/}
-                                                            {/*                /!*</RadioGroup.Label>*!/*/}
-
-
-                                                            {/*                <RadioGroup.Description as="p"*/}
-                                                            {/*                                        className="mt-1 text-sm text-gray-500">*/}
-                                                            {/*                    {prod.price} ₽*/}
-                                                            {/*                </RadioGroup.Description>*/}
-                                                            {/*                <div*/}
-                                                            {/*                    className={classNames(*/}
-                                                            {/*                        // active ? 'border-1' : 'border-2',*/}
-                                                            {/*                        checked ? 'border-green-600' : 'border-transparent',*/}
-                                                            {/*                        'absolute -inset-px rounded-lg pointer-events-none border-2'*/}
-                                                            {/*                    )}*/}
-                                                            {/*                    aria-hidden="true"*/}
-                                                            {/*                />*/}
-                                                            {/*            </>*/}
-                                                            {/*        )}*/}
-                                                            {/*    </RadioGroup.Option>*/}
-                                                            {/*))}*/}
-
-
                                                         </div>
 
 
@@ -334,63 +262,6 @@ export default function Card({open, setOpen, product}) {
                                             </form>
                                         </section>
                                     </div>
-
-
-                                    {/*<div className="bg-gray-50 h-64 col-span-12">*/}
-                                    {/*    <RadioGroup value={selectedSize} onChange={setSelectedSize}>*/}
-                                    {/*        <RadioGroup.Label*/}
-                                    {/*            className="block text-sm font-medium text-gray-700">*/}
-                                    {/*            Магазины*/}
-                                    {/*        </RadioGroup.Label>*/}
-
-                                    {/*        <div className="mt-5 grid grid-cols-1 gap-4">*/}
-                                    {/*            {product.cartUnits?.map((prod) => (*/}
-                                    {/*                <RadioGroup.Option*/}
-                                    {/*                    as="div"*/}
-                                    {/*                    key={prod.storeId}*/}
-                                    {/*                    value={prod}*/}
-                                    {/*                    className={({active}) =>*/}
-                                    {/*                        classNames(*/}
-                                    {/*                            'relative flex justify-between border border-gray-300 rounded-lg p-3 cursor-pointer focus:outline-none '*/}
-                                    {/*                        )*/}
-                                    {/*                    }*/}
-                                    {/*                >*/}
-                                    {/*                    {({active, checked}) => (*/}
-                                    {/*                        <>*/}
-                                    {/*                            <div>*/}
-                                    {/*                                /!*<img src={lentLogo}*!/*/}
-                                    {/*                                /!*     className="object-center object-cover h-7 "/>*!/*/}
-                                    {/*                                {prod.storeId}*/}
-                                    {/*                            </div>*/}
-
-                                    {/*                            /!*<RadioGroup.Label as="p"*!/*/}
-                                    {/*                            /!*                  className="text-base font-medium text-gray-900">*!/*/}
-                                    {/*                            /!*    {size.name}*!/*/}
-                                    {/*                            /!*</RadioGroup.Label>*!/*/}
-
-
-                                    {/*                            <RadioGroup.Description as="p"*/}
-                                    {/*                                                    className="mt-1 text-sm text-gray-500">*/}
-                                    {/*                                {prod.price} ₽*/}
-                                    {/*                            </RadioGroup.Description>*/}
-                                    {/*                            <div*/}
-                                    {/*                                className={classNames(*/}
-                                    {/*                                    // active ? 'border-1' : 'border-2',*/}
-                                    {/*                                    checked ? 'border-green-600' : 'border-transparent',*/}
-                                    {/*                                    'absolute -inset-px rounded-lg pointer-events-none border-2'*/}
-                                    {/*                                )}*/}
-                                    {/*                                aria-hidden="true"*/}
-                                    {/*                            />*/}
-                                    {/*                        </>*/}
-                                    {/*                    )}*/}
-                                    {/*                </RadioGroup.Option>*/}
-                                    {/*            ))}*/}
-                                    {/*        </div>*/}
-
-
-                                    {/*    </RadioGroup>*/}
-                                    {/*</div>*/}
-
 
                                 </div>
                             </div>

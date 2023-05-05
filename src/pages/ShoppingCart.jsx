@@ -3,34 +3,18 @@ import {CheckIcon, ClockIcon} from '@heroicons/react/solid'
 import {useSelector, useDispatch} from "react-redux";
 import axios from "axios";
 import {useEffect, useState} from "react";
+import lentLogo from "../images/logo-lenta.png"
+import metroLogo from "../images/Metro.png"
+import vkusvillLogo from "../images/vkusvill.png"
 import {decreaseCount, removeFromCart} from "../state";
 
-// const products = [
-//     {
-//         id: 1,
-//         name: 'Rich Bitter тоник-мандарин 1 л',
-//         href: '#',
-//         price: '$32.00',
-//         color: '',
-//         size: '',
-//         inStock: true,
-//         imageSrc: 'https://clck.ru/346Lpt',
-//         imageAlt: 'Front side of mint cotton t-shirt with wavey lines pattern.',
-//     },
-//     {
-//         id: 2,
-//         name: 'Добрый кола 1,5 л',
-//         href: '#',
-//         price: '$32.00',
-//         color: '',
-//         inStock: false,
-//         leadTime: '7-8 years',
-//         size: '',
-//         imageSrc: 'https://clck.ru/346Loe',
-//         imageAlt: 'Front side of charcoal cotton t-shirt.',
-//     },
-//     // More products...
-// ]
+function totalCartAmount(cartItems) {
+    const total = cartItems.reduce(
+        (quantity, item) => item.price * item.quantity + quantity,
+        0
+    )
+    return total
+}
 
 export default function ShoppingCart() {
     const dispatch = useDispatch();
@@ -45,14 +29,20 @@ export default function ShoppingCart() {
         setCartList(composeCart(response.data))
     }
 
-    function composeCart(data){
+    function composeCart(data) {
         let composedCart = [];
         Object.keys(data).forEach(key => {
             let value = data[key]
-            composedCart.push({storeId: key, items: value})
+            composedCart.push({storeId: parseInt(key), items: value})
         });
         return composedCart
     }
+
+    let storeImg = [
+        {storeId: 1, name: "Лента", src: lentLogo},
+        {storeId: 2, name: "Метро", src: metroLogo},
+        {storeId: 3, name: "Вкусвилл", src: vkusvillLogo}
+    ];
 
     useEffect(() => {
         getCart()
@@ -60,18 +50,36 @@ export default function ShoppingCart() {
 
     return (
         <div className="bg-white min-h-screen">
-            <div className="max-w-2xl mx-auto py-14 px-4  sm:px-6 lg:px-0">
-                <h1 className="text-3xl  text-center tracking-tight text-gray-900 sm:text-4xl">Корзина</h1>
+            <div className="max-w-4xl mx-auto py-14 px-4 sm:px-6 lg:px-0">
+                <h1 className="text-3xl text-center tracking-tight sm:text-4xl text-gray-700">Ваша корзина</h1>
 
-                <form className="mt-12">
+                <form className="mt-14">
                     <section aria-labelledby="cart-heading">
                         <h2 id="cart-heading" className="sr-only">
                             Items in your shopping cart
                         </h2>
                         {cartList.map((cartInStore) => (
-                            <div>
-                                <h1>Магазин {cartInStore.storeId}</h1>
-                                <ul role="list" key={cartInStore.storeId} className="border-t border-b border-gray-200 divide-y divide-gray-200">
+                            <div className="bg-gray-100 p-12 rounded-md mb-10 shadow-lg">
+                                <div className="flex justify-between">
+                                    <img
+                                        src={storeImg.find(item => item.storeId === cartInStore.storeId)?.src}
+                                        className="object-center object-scale-down w-28 mb-4 ml-4 rounded"/>
+                                    <div className="text-gray-600 flex items-baseline">
+                                        <div className="mr-2">
+                                            {cartInStore.items?.length} шт
+                                        </div>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="purple"
+                                             viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd"
+                                                  d="M8.89 4.72a7.42 7.42 0 0 1-1.45 2.72c-.6.6-1.67 1.09-2.72 1.45a16.94 16.94 0 0 1-.8.25l-.27.08c-.39.1-.39.81 0 .92a21.17 21.17 0 0 1 1.07.33c1.05.36 2.11.84 2.72 1.45.6.6 1.09 1.67 1.45 2.72a16.94 16.94 0 0 1 .25.8l.08.27c.1.38.81.38.92 0a22.86 22.86 0 0 1 .27-.88 16.4 16.4 0 0 1 .06-.2c.36-1.04.84-2.1 1.45-2.71.6-.6 1.67-1.09 2.72-1.45a16.39 16.39 0 0 1 .8-.25l.27-.08c.39-.1.39-.82 0-.92a21.17 21.17 0 0 1-1.07-.33 7.44 7.44 0 0 1-2.72-1.45 7.44 7.44 0 0 1-1.45-2.72 16.4 16.4 0 0 1-.25-.8 22.85 22.85 0 0 1-.08-.27c-.1-.39-.81-.39-.92 0a21.17 21.17 0 0 1-.33 1.07ZM3.53.28a.4.4 0 0 0-.76 0l-.3.91a2 2 0 0 1-1.28 1.27l-.92.3a.4.4 0 0 0 0 .77l.92.3a2 2 0 0 1 1.27 1.28l.3.92a.4.4 0 0 0 .77 0l.3-.92a2 2 0 0 1 1.28-1.27l.91-.3a.4.4 0 0 0 0-.77l-.91-.3a2 2 0 0 1-1.27-1.28L3.53.28Z"></path>
+                                        </svg>
+
+                                    </div>
+                                </div>
+
+                                {/*<h1>Магазин {cartInStore.storeId}</h1>*/}
+                                <ul role="list" key={cartInStore.storeId}
+                                    className="border-t border-b border-gray-200 divide-y divide-gray-200">
                                     {cartInStore.items?.map((product) => (
                                         <li key={product.productId} className="flex py-6">
                                             <div className="flex-shrink-0">
@@ -114,6 +122,30 @@ export default function ShoppingCart() {
                                         </li>
                                     ))}
                                 </ul>
+                                <section aria-labelledby="summary-heading" className="mt-10 mb-3">
+                                    <div>
+                                        <dl className="space-y-4">
+                                            <div className="flex items-center justify-between">
+                                                <dt className="text-base font-medium text-gray-900">Итого</dt>
+                                                <dd className="ml-4 text-base font-medium text-gray-900">{totalCartAmount(cartInStore.items)} ₽</dd>
+                                            </div>
+                                        </dl>
+                                        {/*<p className="mt-1 text-sm text-gray-500">Shipping and taxes will be calculated at*/}
+                                        {/*    checkout.</p>*/}
+                                    </div>
+
+                                    <div className="mt-6">
+                                        <button
+                                            type="submit"
+                                            className="w-full bg-green-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500"
+                                            onClick={(e) => {
+                                                e.preventDefault()
+                                                console.log(cartInStore.items)
+                                            }}>
+                                            Оформить заказ
+                                        </button>
+                                    </div>
+                                </section>
                             </div>
 
                         ))}
@@ -129,33 +161,8 @@ export default function ShoppingCart() {
                                 Чтобы оформить заказ, положите в нее товары
                             </div>
                         </div>
-
-
                         :
-                        <section aria-labelledby="summary-heading" className="mt-10">
-                            <h2 id="summary-heading" className="sr-only">
-                                Order summary
-                            </h2>
-
-                            <div>
-                                <dl className="space-y-4">
-                                    <div className="flex items-center justify-between">
-                                        <dt className="text-base font-medium text-gray-900">Итого</dt>
-                                        <dd className="ml-4 text-base font-medium text-gray-900">$96.00</dd>
-                                    </div>
-                                </dl>
-                                <p className="mt-1 text-sm text-gray-500">Shipping and taxes will be calculated at
-                                    checkout.</p>
-                            </div>
-
-                            <div className="mt-10">
-                                <button
-                                    type="submit"
-                                    className="w-full bg-green-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">
-                                    Оформить заказ
-                                </button>
-                            </div>
-                        </section>
+                        null
                     }
 
                 </form>

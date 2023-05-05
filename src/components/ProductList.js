@@ -84,17 +84,6 @@ export default function ProductList({category, setCategory, page, setPage, setTo
                                 />
                             </div>
 
-
-                            {/*</Link>*/}
-
-                            {/*<div*/}
-                            {/*    className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-w-7 xl:aspect-h-8">*/}
-                            {/*    <img*/}
-                            {/*        src={product.photoUrl}*/}
-                            {/*        alt={""}*/}
-                            {/*        className="h-full w-full object-cover object-center hover:opacity-75"*/}
-                            {/*    />*/}
-                            {/*</div>*/}
                             <h3 className="mt-4 text-sm text-gray-700 h-10">{product.name}</h3>
                             <div className="m-auto justify-between flex mt-2 items-end {/*снизу*/}">
                                 <p className="mt-1 text-l font-medium text-gray-900 mr-0 ">от {product.minPrice} ₽</p>
