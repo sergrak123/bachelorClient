@@ -10,11 +10,11 @@ export const privateRoutes = [
     // {path: "/posts/:id", element: <PostIdPage/>}
     {path: "/catalog", element: <Catalog/>},
     {path: "/cart", element: <ShoppingCart/>},
+    {path: "/checkout", element: <Checkout/>},
 ]
 
 export const publicRoutes = [
     {path: "/login", element: <Login/>},
     {path: "/catalog", element: <Catalog/>},
     {path: "/cart", element: <ShoppingCart/>},
-    {path: "/checkout", element: <Checkout/>},
 ]

@@ -5,6 +5,7 @@ import {
 import Router from "./components/Router";
 import {AuthContext} from "./context";
 import NavBarCustom from "./components/NavBarCustom";
+import ScrollToTop from "./utils/ScrollToTop";
 
 function App() {
     const [isAuth, setIsAuth] = useState(false)
@@ -24,6 +25,7 @@ function App() {
             isLoading
         }}>
             <BrowserRouter>
+                <ScrollToTop/>
                 <NavBarCustom/>
                 <Router/>
             </BrowserRouter>

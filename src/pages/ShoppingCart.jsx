@@ -3,14 +3,22 @@ import {CheckIcon, ClockIcon} from '@heroicons/react/solid'
 import {useSelector, useDispatch} from "react-redux";
 import axios from "axios";
 import {useEffect, useState} from "react";
-import lentLogo from "../images/logo-lenta.png"
-import metroLogo from "../images/Metro.png"
-import vkusvillLogo from "../images/vkusvill.png"
+import {ArrowLeftIcon} from '@heroicons/react/outline'
 import {decreaseCount, removeFromCart} from "../state";
+import {Link} from "react-router-dom";
+import {storeImg} from "../utils/storeImages";
 
 function totalCartAmount(cartItems) {
     const total = cartItems.reduce(
         (quantity, item) => item.price * item.quantity + quantity,
+        0
+    )
+    return total
+}
+
+function totalQuantity(cartItems) {
+    const total = cartItems.reduce(
+        (quantity, item) => item.quantity + quantity,
         0
     )
     return total
@@ -38,32 +46,49 @@ export default function ShoppingCart() {
         return composedCart
     }
 
-    let storeImg = [
-        {storeId: 1, name: "Лента", src: lentLogo},
-        {storeId: 2, name: "Метро", src: metroLogo},
-        {storeId: 3, name: "Вкусвилл", src: vkusvillLogo}
-    ];
-
     useEffect(() => {
         getCart()
     }, [cart])
 
     return (
+
         <div className="bg-white min-h-screen">
             <div className="max-w-4xl mx-auto py-14 px-4 sm:px-6 lg:px-0">
+
+                {/*<Link to="/catalog">*/}
+                {/*    <div className="flex items-center text-gray-500 cursor-pointer">*/}
+                {/*        <ArrowLeftIcon className="h-5 w-5 mr-2 ml-4"/>*/}
+                {/*        Вернуться в каталог*/}
+                {/*    </div>*/}
+                {/*</Link>*/}
+                {/*<h1 className="text-3xl text-center tracking-tight sm:text-4xl text-gray-700">Ваша корзина</h1>*/}
+
                 <h1 className="text-3xl text-center tracking-tight sm:text-4xl text-gray-700">Ваша корзина</h1>
 
-                <form className="mt-14">
+                {/*<div className="flex items-start">*/}
+                {/*    <div className="w-1/3 mt-3">*/}
+                {/*        <Link to="/catalog">*/}
+                {/*            <div className="flex items-center text-gray-400 cursor-pointer">*/}
+                {/*                <ArrowLeftIcon className="h-4 w-4 mr-1 ml-4"/>*/}
+                {/*                /!*Вернуться в каталог*!/*/}
+                {/*            </div>*/}
+                {/*        </Link>*/}
+                {/*    </div>*/}
+                {/*    <h1 className="text-3xl text-center tracking-tight sm:text-4xl text-gray-700 w-1/3">Ваша корзина</h1>*/}
+                {/*</div>*/}
+
+
+                <form className="mt-10">
                     <section aria-labelledby="cart-heading">
                         <h2 id="cart-heading" className="sr-only">
                             Items in your shopping cart
                         </h2>
                         {cartList.map((cartInStore) => (
-                            <div className="bg-gray-100 p-12 rounded-md mb-10 shadow-lg">
+                            <div className="bg-gray-100 px-12 pb-12 pt-9 rounded-md mb-14 shadow-lg">
                                 <div className="flex justify-between">
                                     <img
-                                        src={storeImg.find(item => item.storeId === cartInStore.storeId)?.src}
-                                        className="object-center object-scale-down w-28 mb-4 ml-4 rounded"/>
+                                        src={storeImg().find(item => item.storeId === cartInStore.storeId)?.src}
+                                        className="object-center object-scale-down w-28 mb-6 ml-0 rounded"/>
                                     <div className="text-gray-600 flex items-baseline">
                                         <div className="mr-2">
                                             {cartInStore.items?.length} шт
@@ -135,15 +160,21 @@ export default function ShoppingCart() {
                                     </div>
 
                                     <div className="mt-6">
-                                        <button
-                                            type="submit"
-                                            className="w-full bg-green-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500"
-                                            onClick={(e) => {
-                                                e.preventDefault()
-                                                console.log(cartInStore.items)
-                                            }}>
-                                            Оформить заказ
-                                        </button>
+                                        <Link to="/checkout"
+                                              state={{
+                                                  ...cartInStore,
+                                                  totalAmount: totalCartAmount(cartInStore.items),
+                                                  totalQuantity: totalQuantity(cartInStore.items)
+                                              }}>
+                                            <button
+                                                className="w-full bg-green-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-green-700 "
+                                                onClick={(e) => {
+                                                    // e.preventDefault()
+                                                    console.log(cartInStore.items)
+                                                }}>
+                                                Оформить заказ
+                                            </button>
+                                        </Link>
                                     </div>
                                 </section>
                             </div>
@@ -151,7 +182,7 @@ export default function ShoppingCart() {
                         ))}
                     </section>
                     {cart?.length === 0
-                        ? <div className="flex justify-center items-center flex-col mt-24">
+                        ? <div className="flex justify-center items-center flex-col mt-32">
                             <img src="https://yastatic.net/s3/lavka-web/public/assets/images/emptyCart@2x.png"
                                  className="h-32"/>
                             <div className="flex justify-center text-3xl text-gray-400 mt-7">
