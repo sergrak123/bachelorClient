@@ -1,12 +1,14 @@
-import {useState} from 'react'
+import {useContext, useEffect, useState} from 'react'
 import {RadioGroup} from '@headlessui/react'
 import {CheckCircleIcon, TrashIcon} from '@heroicons/react/solid'
-import {Link, useLocation} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import {ArrowLeftIcon} from '@heroicons/react/outline'
 import {storeImg} from "../utils/storeImages";
 import {removeFromCart} from "../state";
 import axios from "axios";
 import {useDispatch} from "react-redux";
+import {AuthContext} from "../context";
+import { Switch } from '@headlessui/react'
 
 
 function classNames(...classes) {
@@ -25,18 +27,34 @@ export default function Checkout() {
         description: ""
     })
     let {state} = useLocation();
-    console.log(state)
+    const {authInfo} = useContext(AuthContext)
+    const router = useNavigate()
+    const [autoCompleted, setAutoCompleted] = useState(false)
+    // console.log(state)
+    // console.log(authInfo)
 
     async function createOrder() {
         const url = "http://localhost:8080/orders";
         const response = await axios.post(url,
             {
-                userId: 1,
+                userId: authInfo?.id,
                 storeId: state?.storeId,
                 cart: state?.items,
                 amount: state?.totalAmount
             }
         )
+    }
+
+    function autoCompleteInputs(){
+        setShippingInfo({
+            name: authInfo.firstName,
+            phone: authInfo.phoneNumber,
+            city: authInfo.city,
+            street: "",
+            house: "",
+            flat: "",
+            description: ""
+        })
     }
 
     function removeOrderedCart(items) {
@@ -45,6 +63,25 @@ export default function Checkout() {
         }
         console.log(items)
     }
+
+    function removeInputs() {
+        setShippingInfo({
+            name: "",
+            phone: "",
+            city: "",
+            street: "",
+            house: "",
+            flat: "",
+            description: ""
+        })
+    }
+
+    useEffect(()=>{
+        if (autoCompleted)
+            autoCompleteInputs()
+        else
+            removeInputs();
+    },[autoCompleted])
 
 
     return (
@@ -66,6 +103,32 @@ export default function Checkout() {
 
                 <form className="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16">
                     <div>
+                        <div className="sm:col-span-2">
+                            <div className="flex items-start justify-end">
+                                <div className="ml-0 mr-4">
+                                    <p className="text-base text-gray-400">
+                                        Автозаполнить поля
+                                    </p>
+                                </div>
+                                <div className="flex-shrink-0">
+                                    <Switch
+                                        checked={autoCompleted}
+                                        onChange={setAutoCompleted}
+                                        className={classNames(
+                                            autoCompleted ? 'bg-green-600' : 'bg-gray-200',
+                                            'relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 '
+                                        )}
+                                    >
+                                        <span
+                                            className={classNames(
+                                                autoCompleted ? 'translate-x-5' : 'translate-x-0',
+                                                'inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200'
+                                            )}
+                                        />
+                                    </Switch>
+                                </div>
+                            </div>
+                        </div>
                         <div>
                             <h2 className="text-lg font-medium text-gray-900">Контактная информация</h2>
 
@@ -271,6 +334,7 @@ export default function Checkout() {
                                         //e.preventDefault()
                                         createOrder();
                                         removeOrderedCart(state?.items);
+                                        router("/catalog")
                                     }}
                                 >
                                     Оформить заказ

@@ -153,7 +153,7 @@ export default function Card({open, setOpen, product}) {
                                                     value={quantity}
                                                 >
                                                     {getCounts(10).map((item)=>(
-                                                        <option value={item}>{item}</option>
+                                                        <option value={item} key={item}>{item}</option>
                                                     ))}
                                                 </select>
                                             </div>

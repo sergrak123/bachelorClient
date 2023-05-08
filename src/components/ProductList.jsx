@@ -27,7 +27,7 @@ export default function ProductList({category, setCategory, page, setPage, setTo
                 size,
             }
         })
-        console.log(response)
+        // console.log(response)
         setProducts(response.data.content)
         setTotalPage(response.data.totalPages)
     }

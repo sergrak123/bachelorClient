@@ -4,29 +4,35 @@ import {
 } from "react-router-dom";
 import Router from "./components/Router";
 import {AuthContext} from "./context";
-import NavBarCustom from "./components/NavBarCustom";
+import NavigationBar from "./components/NavigationBar";
 import ScrollToTop from "./utils/ScrollToTop";
 
 function App() {
     const [isAuth, setIsAuth] = useState(false)
-    const [isLoading, setLoading] =useState(true)
+    const [authInfo, setAuthInfo] = useState()
+    const [isLoading, setLoading] = useState(true)
 
-    useEffect(()=>{
-        if (localStorage.getItem("auth")){
+    useEffect(() => {
+        if (localStorage.getItem("auth")) {
             setIsAuth(true)
+            const info = localStorage.getItem("authInfo");
+            // if (jsonValue != null) return JSON.parse(jsonValue);
+            setAuthInfo(JSON.parse(info))
         }
         setLoading(false)
-    },[])
+    }, [])
 
     return (
         <AuthContext.Provider value={{
             isAuth,
             setIsAuth,
+            authInfo,
+            setAuthInfo,
             isLoading
         }}>
             <BrowserRouter>
                 <ScrollToTop/>
-                <NavBarCustom/>
+                <NavigationBar/>
                 <Router/>
             </BrowserRouter>
         </AuthContext.Provider>

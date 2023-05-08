@@ -19,7 +19,7 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function NavBarCustom() {
+export default function NavigationBar() {
 
     const {isAuth, setIsAuth} = useContext(AuthContext)
     const location = useLocation();
@@ -27,6 +27,7 @@ export default function NavBarCustom() {
     const logout = () => {
         setIsAuth(false)
         localStorage.removeItem("auth")
+        localStorage.removeItem("authInfo")
     }
 
     const userNavigation = [

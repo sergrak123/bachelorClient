@@ -11,6 +11,7 @@ export const privateRoutes = [
     {path: "/catalog", element: <Catalog/>},
     {path: "/cart", element: <ShoppingCart/>},
     {path: "/checkout", element: <Checkout/>},
+    // {path: "/login", element: <Login/>},
 ]
 
 export const publicRoutes = [
