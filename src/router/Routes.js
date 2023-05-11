@@ -4,6 +4,8 @@ import Catalog from "../pages/Catalog";
 import Card from "../pages/Card";
 import ShoppingCart from "../pages/ShoppingCart";
 import Checkout from "../pages/Checkout";
+import OrderHistory from "../pages/OrderHistory";
+import Registration from "../pages/Registration";
 
 export const privateRoutes = [
     // {path: "/posts", element: <Posts/>},
@@ -11,11 +13,12 @@ export const privateRoutes = [
     {path: "/catalog", element: <Catalog/>},
     {path: "/cart", element: <ShoppingCart/>},
     {path: "/checkout", element: <Checkout/>},
-    // {path: "/login", element: <Login/>},
+    {path: "/orders", element: <OrderHistory/>},
 ]
 
 export const publicRoutes = [
     {path: "/login", element: <Login/>},
+    {path: "/registration", element: <Registration/>},
     {path: "/catalog", element: <Catalog/>},
     {path: "/cart", element: <ShoppingCart/>},
 ]

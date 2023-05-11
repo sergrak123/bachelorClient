@@ -8,7 +8,7 @@ import {removeFromCart} from "../state";
 import axios from "axios";
 import {useDispatch} from "react-redux";
 import {AuthContext} from "../context";
-import { Switch } from '@headlessui/react'
+import {Switch} from '@headlessui/react'
 
 
 function classNames(...classes) {
@@ -45,7 +45,7 @@ export default function Checkout() {
         )
     }
 
-    function autoCompleteInputs(){
+    function autoCompleteInputs() {
         setShippingInfo({
             name: authInfo.firstName,
             phone: authInfo.phoneNumber,
@@ -76,12 +76,12 @@ export default function Checkout() {
         })
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         if (autoCompleted)
             autoCompleteInputs()
         else
             removeInputs();
-    },[autoCompleted])
+    }, [autoCompleted])
 
 
     return (
@@ -334,7 +334,7 @@ export default function Checkout() {
                                         //e.preventDefault()
                                         createOrder();
                                         removeOrderedCart(state?.items);
-                                        router("/catalog")
+                                        router("/orders", { replace: true})
                                     }}
                                 >
                                     Оформить заказ
