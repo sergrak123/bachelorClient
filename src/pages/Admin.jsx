@@ -1,22 +1,25 @@
 import { Disclosure } from '@headlessui/react'
 import { LockOpenIcon} from '@heroicons/react/outline'
-import AdminProductList from "../components/AdminProductList";
+import AdminProductList from "../components/admin/AdminProductList";
 import {storeImg} from "../utils/storeImages";
-import AddingProduct from "../components/AddingProduct";
+import AddingProduct from "../components/admin/AddingProduct";
 import {useState} from "react";
+import AdminOrderList from "../components/admin/AdminOrderList";
 
 
-const navigation = [
-    { name: 'Продукты', href: '#', current: true },
-    { name: 'Заказы', href: '#', current: false }
+const navigate = [
+    { name: 'Продукты', current: true, component: <AdminProductList/> },
+    { name: 'Заказы', current: false, component: <AdminOrderList/>}
 ]
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function Admin() {
 
+
+export default function Admin() {
+    const[navigation, setNavigation] = useState(navigate[0])
     return (
         <>
             <div className="min-h-full bg-gray-100">
@@ -38,20 +41,20 @@ export default function Admin() {
                                                 </div>
                                                 <div className="hidden md:block">
                                                     <div className="ml-10 flex items-baseline space-x-4">
-                                                        {navigation.map((item) => (
-                                                            <a
+                                                        {navigate.map((item) => (
+                                                            <div
                                                                 key={item.name}
-                                                                href={item.href}
                                                                 className={classNames(
-                                                                    item.current
+                                                                    item.name===navigation.name
                                                                         ? 'bg-gray-900 text-white'
                                                                         : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                                                                    'px-3 py-2 rounded-md text-sm font-medium'
+                                                                    'px-3 py-2 rounded-md text-sm font-medium cursor-pointer'
                                                                 )}
                                                                 aria-current={item.current ? 'page' : undefined}
+                                                                onClick={e => setNavigation(item)}
                                                             >
                                                                 {item.name}
-                                                            </a>
+                                                            </div>
                                                         ))}
                                                     </div>
                                                 </div>
@@ -90,7 +93,9 @@ export default function Admin() {
                 <main className="-mt-32">
                     <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
                         <div className="bg-white rounded-lg shadow px-5 py-6 sm:px-6">
-                            <AdminProductList/>
+                            {navigation.component}
+                            {/*<AdminProductList/>*/}
+                            {/*<AdminOrderList/>*/}
                         </div>
                     </div>
                 </main>

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import Category from "../components/Category";
-import ProductList from "../components/ProductList";
-import Pagination from "../components/Pagination";
+import Category from "../components/catalog/Category";
+import ProductList from "../components/catalog/ProductList";
+import Pagination from "../components/catalog/Pagination";
 
 
 function Catalog(props) {

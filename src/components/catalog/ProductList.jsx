@@ -4,9 +4,9 @@ import {
     addToCart,
     decreaseCount,
     increaseCount,
-} from "../state";
+} from "../../state";
 import axios from "axios";
-import Card from "../pages/Card";
+import Card from "../../pages/Card";
 
 
 export default function ProductList({category, setCategory, page, setPage, setTotalPage}) {

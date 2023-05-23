@@ -1,6 +1,6 @@
 //import {ArrowNarrowLeftIcon, ArrowNarrowRightIcon} from '@heroicons/react/solid'
 //import {useState} from "react";
-import {getPagesArray} from "../utils/pages";
+import {getPagesArray} from "../../utils/pages";
 
 export default function Pagination({page, setPage,totalPage}) {
 

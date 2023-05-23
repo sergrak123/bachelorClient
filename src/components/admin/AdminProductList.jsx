@@ -46,6 +46,7 @@ export default function AdminProductList() {
                         Список всех продуктов в вашем магазине
                     </p>
                 </div>
+
                 <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
                     <button
                         type="button"
@@ -109,7 +110,7 @@ export default function AdminProductList() {
                                         </td>
                                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{product.parameter}</td>
                                         <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                            <a href="#" className="text-gray-600 hover:text-gray-700">
+                                            <a href="src/components/admin/AdminProductList#" className="text-gray-600 hover:text-gray-700">
                                                 Изменить<span className="sr-only">, {product.name}</span>
                                             </a>
                                         </td>
