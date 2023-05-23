@@ -6,6 +6,7 @@ import ShoppingCart from "../pages/ShoppingCart";
 import Checkout from "../pages/Checkout";
 import OrderHistory from "../pages/OrderHistory";
 import Registration from "../pages/Registration";
+import Admin from "../pages/Admin";
 
 export const privateRoutes = [
     // {path: "/posts", element: <Posts/>},
@@ -14,6 +15,7 @@ export const privateRoutes = [
     {path: "/cart", element: <ShoppingCart/>},
     {path: "/checkout", element: <Checkout/>},
     {path: "/orders", element: <OrderHistory/>},
+    {path: "/admin", element: <Admin/>},
 ]
 
 export const publicRoutes = [
