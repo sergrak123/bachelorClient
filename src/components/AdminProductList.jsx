@@ -1,18 +1,18 @@
-/* This example requires Tailwind CSS v2.0+ */
 import {useEffect, useState} from "react";
 import axios from "axios";
+import AddingProduct from "./AddingProduct";
 
-const products = [
-    {
-        name: 'Lindsay WaltonLindsay Walton',
-        category: 'Соки',
-        price: '200',
-        parameter: '500 мл',
-        image:
-            'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    },
-    // More people...
-]
+// const products = [
+//     {
+//         name: 'Lindsay WaltonLindsay Walton',
+//         category: 'Соки',
+//         price: '200',
+//         parameter: '500 мл',
+//         image:
+//             'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+//     },
+//     // More people...
+// ]
 
 
 export default function AdminProductList() {
@@ -34,9 +34,11 @@ export default function AdminProductList() {
     useEffect(() => {
         getProductList()
     }, [])
+    const [modal, setModal] = useState(false);
 
     return (
         <div className="px-4 sm:px-6 lg:px-8">
+            <AddingProduct open={modal} setOpen={setModal}/>
             <div className="sm:flex sm:items-center">
                 <div className="sm:flex-auto">
                     <h1 className="text-xl font-semibold text-gray-900">Продукты</h1>
@@ -48,6 +50,7 @@ export default function AdminProductList() {
                     <button
                         type="button"
                         className="inline-flex items-center justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 sm:w-auto"
+                        onClick={()=>setModal(true)}
                     >
                         + Добавить
                     </button>

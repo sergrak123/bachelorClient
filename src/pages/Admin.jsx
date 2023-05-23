@@ -2,6 +2,9 @@ import { Disclosure } from '@headlessui/react'
 import { LockOpenIcon} from '@heroicons/react/outline'
 import AdminProductList from "../components/AdminProductList";
 import {storeImg} from "../utils/storeImages";
+import AddingProduct from "../components/AddingProduct";
+import {useState} from "react";
+
 
 const navigation = [
     { name: 'Продукты', href: '#', current: true },
@@ -13,9 +16,11 @@ function classNames(...classes) {
 }
 
 export default function Admin() {
+
     return (
         <>
-            <div className="min-h-full bg-gray-50">
+            <div className="min-h-full bg-gray-100">
+
                 <div className="bg-gray-800 pb-32">
                     <Disclosure as="nav" className="bg-gray-800">
                         {({ open }) => (
